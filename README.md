@@ -8,7 +8,7 @@ I personally use wtf in NeoVim as a shortcut.
 
 To compile it to your OS you will need Rust installed. Then:
 
-cd zenclock
+cd wtf
 
 cargo build --release
 
