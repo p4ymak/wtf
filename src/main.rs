@@ -1,8 +1,8 @@
 use std::env;
-use std::process::Command;
+use std::process::{Command, Stdio};
 
 fn is_cyrillic(line: &str) -> bool {
-    if line.len() == 0 {
+    if line.is_empty() {
         return true;
     }
     let mut utf16 = [0; 2];
@@ -24,14 +24,16 @@ fn www_address(line: &str) -> String {
         true => "https://yandex.ru/search/?text=",
         false => "https://www.google.com/search?q=",
     };
-    format!("{}{}", engine, line).to_string()
+    format!("{}{}\n", engine, line)
 }
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let line: String = args[1..].join(" ");
-    Command::new("firefox")
+    Command::new("xdg-open")
         .args(&[www_address(&line)])
+        .stdout(Stdio::null())
+        .stderr(Stdio::null())
         .spawn()
         .unwrap();
 }
